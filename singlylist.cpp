@@ -9,17 +9,31 @@ struct ListItem {
     struct ListItem *next;
 };
 
+int push(int value)
+{
+    ListItem *newEntry; // register a name with your machine for a var
+    newEntry = (ListItem*)malloc(sizeof(struct ListItem)); // reserve memory for an object with the size of a listItem
+    newEntry->data = value;
+    newEntry->next = head;
+    head = newEntry;
+    return newEntry;
+}
 
-int main(){
+int main()
+{
 
-ListItem *head = NULL; //empty linked list, *next is null
-ListItem *temp; //init temp node
-temp = (ListItem*)malloc(sizeof(struct ListItem)); //allocate memory for list item
-temp->data = 4; //store data
-temp->next=head; //store adress of pointer head
-head = temp; //transfer adress of 'temp' to 'head'
+    ListItem *head = NULL; //empty linked list, *next is null
+    ListItem *A; //init temp node
+    A = (ListItem*)malloc(sizeof(struct ListItem)); //allocate memory for list item
+    A->data = 4; //store data
+    A->next=head; //store adress of pointer head
+    head = A; //transfer adress of 'temp' to 'head'
 
-cout << "blergh!";
+    ListItem *B;
+    B = push(17,head);
+
+    cout << B;
+
 
 }
 
