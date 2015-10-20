@@ -9,7 +9,7 @@ struct ListItem {
     struct ListItem *next;
 };
 
-int push(int value)
+ListItem* push(int value, ListItem* head)
 {
     ListItem *newEntry; // register a name with your machine for a var
     newEntry = (ListItem*)malloc(sizeof(struct ListItem)); // reserve memory for an object with the size of a listItem
