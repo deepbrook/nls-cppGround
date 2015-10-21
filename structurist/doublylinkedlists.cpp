@@ -5,55 +5,69 @@
 using namespace std;
 
 
-struct ListItem {
+struct ListItem2 {
     unsigned int data;
-    struct ListItem *next;
-    struct ListItem *previous;
+    struct ListItem2 *next;
+    struct ListItem2 *previous;
 };
 
 struct List{
-    struct ListItem *head;
-    struct ListItem *tail;
+    struct ListItem2 *head;
+    struct ListItem2 *tail;
 
 };
 
-void push(int value, ListItem **head)
+void push(int value, List **list)
 {
-    ListItem *newEntry; // register a name with your machine for a var
-    newEntry = (ListItem*)malloc(sizeof(struct ListItem)); // reserve memory for an object with the size of a listItem
+    ListItem2 *newEntry; // register a name with your machine for a var
+    newEntry = (ListItem2*)malloc(sizeof(struct ListItem2)); // reserve memory for an object with the size of a listItem
     newEntry->data = value;
-    newEntry->next = *head;
+    newEntry->next = (*list)->head;
     newEntry->previous = NULL;
-    *head->previous = newEntry;
-    head = newEntry;
+    if ((*list)->head != NULL){
+            (*list)->head->previous = newEntry;
+    }
+    if ((*list)->tail == NULL){
+        (*list)->tail = newEntry;
+    };
+
+   (*list)->head = newEntry;
     return;
 }
 
 
-unsigned int pop(ListItem **tail)
+unsigned int pop(List **list)
 {
-    ListItem* newTail = *tail->previous;
-    unsigned int val = *tail->data;
-    *tail->previous->next = NULL;
-    free(*tail);
-    tail = newTail;
+    if ((*list)->tail == NULL){
+        return 0;
+    }
+    ListItem2* newTail = (*list)->tail->previous;
+    unsigned int val = (*list)->tail->data;
+    (*list)->tail->previous->next = NULL;
+    free((*list)->tail);
+    (*list)->tail = newTail;
     return val;
 }
 
 int main()
 {
 
-    ListItem *head = NULL; //empty linked list, *next is null
+    List *dllist;
+    dllist= (List*)malloc(sizeof(struct List));
+    dllist->head = NULL;
+    dllist->tail = NULL;
 
+    push(4,&dllist);
+    push(17,&dllist);
+    push(19,&dllist);
+    pop(&dllist);
+    push(27,&dllist);
 
-    push_tail(4,&head);
-    push_tail(17,&head);
-    push_tail(19,&head);
-    pop_tail(&head);
-    push_tail(27,&head);
-
-    for (ListItem* i = head; i!=0; i = i->next){
+    for (ListItem2* i = dllist->head; i!= NULL; i = i->next){
         cout << i->data;
+    }
+    for (ListItem2* i = dllist->tail; i!= NULL; i = i->previous){
+        cout << "\n" <<i->data;
     }
 
 
