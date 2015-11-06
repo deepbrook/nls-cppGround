@@ -43,12 +43,18 @@ unsigned int pop(List **list)
     }
     ListItem2* newTail = (*list)->tail->previous;
     unsigned int val = (*list)->tail->data;
-    (*list)->tail->previous->next = NULL;
+    if ((*list)->tail->previous != NULL){
+        (*list)->tail->previous->next = NULL;
+    }
+    else{
+        (*list)->head = NULL;
+    }
     free((*list)->tail);
     (*list)->tail = newTail;
+
     return val;
 }
-
+#if 0
 int main()
 {
 
@@ -57,20 +63,22 @@ int main()
     dllist->head = NULL;
     dllist->tail = NULL;
 
-    push(4,&dllist);
-    push(17,&dllist);
-    push(19,&dllist);
-    pop(&dllist);
-    push(27,&dllist);
 
-    for (ListItem2* i = dllist->head; i!= NULL; i = i->next){
-        cout << i->data;
-    }
-    for (ListItem2* i = dllist->tail; i!= NULL; i = i->previous){
-        cout << "\n" <<i->data;
-    }
-
+    for (int i = 0; i<100000; i++){
+        for(int a = 0; a<50; a++){
+            push(a, &dllist);
+        };
+        for(int a = 0; a<25; a++){
+            pop(&dllist);
+        };
+        for(int a = 0; a<50; a++){
+            push(a, &dllist);
+        };
+        for(int a = 0; a<75; a++){
+            pop(&dllist);
+        };
+    };
 
 }
 
-
+#endif

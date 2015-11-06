@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1446041825 source:/home/nils/git/nls-cppGround/structurist/doublylinkedlists.cpp
+	<iostream>
+	<cstdlib>
+
+1446041907 source:/home/nils/git/nls-cppGround/structurist/singlylist.cpp
+	<iostream>
+	<cstdlib>
+
+1446115549 source:/home/nils/git/nls-cppGround/structurist/circularlists.cpp
+	<iostream>
+	<cstdlib>
+
+1446029359 source:/home/nils/git/nls-cppGround/structurist/hashtable_1.cpp
+	<iostream>
+	<string>
+	<cstdlib>
+	<cstdint>
+
+1446115243 source:/home/nils/git/nls-cppGround/structurist/hashstack.cpp
+	<iostream>
+	<string>
+	<cstdlib>
+	<cstdint>
+
+1446458331 source:/home/nils/git/nls-cppGround/structurist/binarysearchtree.cpp
+	<iostream>
+	<cstdlib>
+
+1446731044 source:/home/nils/git/nls-cppGround/structurist/avl_binarysearchtree.cpp
+	<iostream>
+	<cstdlib>
+

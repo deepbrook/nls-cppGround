@@ -3,7 +3,7 @@
 #include<cstdlib>
 #include<cstdint>
 using namespace std;
-
+#if 0
 #define HASH_DEFAULT_LENGTH 128
 #define WIDTH  (8 * sizeof(crc))
 #define TOPBIT (1 << (WIDTH - 1))
@@ -12,9 +12,8 @@ typedef uint8_t crc;
 
 //Start of hashing magic
 crc  crcTable[256];
-void
-crcInit(void)
-{
+
+void crcInit(void){
     crc  remainder;
 
 
@@ -54,9 +53,7 @@ crcInit(void)
 
 }   /* crcInit() */
 
-crc
-crcFast(uint8_t const message[], int nBytes)
-{
+crc crcFast(uint8_t const message[], int nBytes){
     uint8_t data;
     crc remainder = 0;
 
@@ -100,39 +97,40 @@ struct hashtable{
 
 };
 
-string getWithId(hashtable table,int id){
-    return "tada";
+string getWithId(const hashtable *table,int id){
+    return table->table[id].data;
 };
-bool isInTable(hashtable table, string a){
-    if(table.table[hashString(a)].data == a){
-        return true;
+int isInTable(const hashtable *table, string a){
+    if(table->table[hashString(a) % table->table_size].data == a){
+        return hashString(a);
     }
     else{
-        return false;
+        return 0;
     }
 };
 
-int addToTable(hashtable my_hashtable, string data){
-    int hash = hashString(data) % my_hashtable.table_size; //string = CRC'd % int - ?
+int addToTable(const hashtable *my_hashtable, string data){
+    int hash = hashString(data) % my_hashtable->table_size; //string = CRC'd % int - ?
 
-    if (my_hashtable.table[hash].data == string()){
-        cout << "Bucket is empty! Filling it..";
+    if (my_hashtable->table[hash].data == string()){
+        cout << "Bucket is empty! Filling it with \'" <<data<<"\'..\n";
     }
     else{
         cout << "Bucket not empty; overwriting previous entry!";
     };
 
-    my_hashtable.table[hash].data = data; //store the address of the hash table item
+    my_hashtable->table[hash].data = data; //store the address of the hash table item
 
     return hash;
 };
 
-
-
+#endif
+#if 0
 
 int main(){
     //do stuff.
     hashtable my_table;
+    crcInit();
     my_table.table_size = HASH_DEFAULT_LENGTH;
     //my_table.table= (ht_item*)malloc(my_table.table_size*sizeof(ht_item));
     my_table.table= new ht_item[HASH_DEFAULT_LENGTH];
@@ -142,11 +140,14 @@ int main(){
         my_table.table[i].data=a;
     };
     int id_this;
-    id_this = addToTable(my_table, "This");
-    cout << my_table.table[id_this].data;
-    cout << my_table.table[hashString("This")].data;
-    cout << isInTable(my_table, "This");
+    id_this = addToTable(&my_table, "This");
+    cout << hashString("This") << "\n";
+    cout <<"Retrieving using direct method.."<< my_table.table[id_this].data<< "\n";
+    cout <<"Retrieving using getWithID().."<< getWithId(&my_table, id_this)<< "\n";
+    cout <<"Retrieving using hashString() as ID"<< my_table.table[hashString("This")%my_table.table_size].data<< "\n";
+    cout << isInTable(&my_table, "This")<< "\n";
+    cout << isInTable(&my_table, "NotThis")<< "\n";
 }
 
-
+#endif
 

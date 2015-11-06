@@ -9,7 +9,7 @@ struct ListItem {
     struct ListItem *next;
 };
 
-ListItem* push_sl(int value, ListItem **head)
+ListItem* push(int value, ListItem **head)
 {
     ListItem *newEntry; // register a name with your machine for a var
     newEntry = (ListItem*)malloc(sizeof(struct ListItem)); // reserve memory for an object with the size of a listItem
@@ -19,12 +19,12 @@ ListItem* push_sl(int value, ListItem **head)
     return 0;
 }
 
-void push_tail_sl(int value, ListItem **head)
+void push_tail(int value, ListItem **head)
 {
     if (*head == NULL){
-            push_sl(value, head);
+            push(value, head);
             return;
-        }
+    }
     for (ListItem *i = *head; i!=0; i = i->next){
 
         if (i->next == NULL){
@@ -40,7 +40,7 @@ void push_tail_sl(int value, ListItem **head)
     };
 }
 
-ListItem* pop_sl(ListItem **head)
+ListItem* pop(ListItem **head)
 {
     ListItem* neck = (*head)->next;
     free(*head);
@@ -48,11 +48,11 @@ ListItem* pop_sl(ListItem **head)
     return neck;
 }
 
-void pop_tail_sl(ListItem **head)
+void pop_tail(ListItem **head)
 {
     if (*head == NULL)
     {
-        pop_sl(head);
+        pop(head);
         return;
     };
 
@@ -67,73 +67,41 @@ void pop_tail_sl(ListItem **head)
     };
 
 }
-
-int hasloop(ListItem **head){
-    int pos = 0;
-
-    if ((*head)->next == NULL){
-        return -1;
-    }
-
-    ListItem* nodeA = *head;
-    ListItem* nodeB = (*head)->next;
-
-    while(nodeB != NULL){
-        pos++;
-
-        nodeA = nodeA->next;
-
-        if (nodeB->next == NULL){
-            return -1;
-        }
-        nodeB = nodeB->next->next;
-
-        if(nodeA == nodeB){
-            return pos;
-        }
-    }
-    return false;
-}
-
-ListItem* printLoopStart(ListItem **head,int loopStart){
-    ListItem* A = *head;
-    ListItem* B = *head;
-    for(int i = 0; i <= loopStart; i++){
-        if(i == loopStart){
-            return *head;
-        }
-
-    }
-
-
-
-}
-
 #if 0
 int main()
 {
 
-    ListItem* head = NULL;
+    ListItem* dllist = NULL;
 
 
     for (int i = 0; i < 10; i++){
 
-        push_sl(i, &head);
+        for (int y = 0; y <= 10; y++){
+            push(y, &dllist);
 
+        };
     };
 
-    for (int i = 0; i<100000; i++){
+    for (ListItem *i = dllist; i!=0; i = i->next){
+
+        if (i->next == NULL){
+
+            i->next = dllist->next->next->next;
+
+        };
+    };
+    for (int i = 0; i<10000; i++){
         for(int a = 0; a<50; a++){
-            push_sl(a, &head);
+            push(a, &dllist);
         };
         for(int a = 0; a<25; a++){
-            pop_sl(&head);
+            pop(&dllist);
         };
         for(int a = 0; a<50; a++){
-            push_sl(a, &head);
+            push(a, &dllist);
         };
         for(int a = 0; a<75; a++){
-            pop_sl(&head);
+            pop(&dllist);
         };
     };
 
