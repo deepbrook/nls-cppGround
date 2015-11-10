@@ -45,7 +45,8 @@ struct sl_tree{
                 }
                 else if(item->next-> value == nvalue){
                     cout << "duplicate value " << nvalue <<"!\n";
-                    return;
+                    cache[level] = item;
+                    level++;
                 }
             }
             else if(item->nlevel != NULL){
@@ -57,12 +58,14 @@ struct sl_tree{
                 }
                 else if(item->next != NULL && nvalue > item->next->value){
                     item = item->next;
-                    cout << "moving right";
+                    cout << "moving right\n"; // LOOPS HERE?!
                     //move right;
                 }
                 else if(item->next->value == nvalue){
                     cout << "duplicate value " << nvalue <<"!\n";
-                    return;
+                    cache[level] = item;
+                    level++;
+
                 }
             }
             else{
@@ -89,16 +92,18 @@ struct sl_tree{
         if (has(nvalue) == false){
 
             //Build new Item
-            sl_item *newItem = new sl_item();
-            newItem->value = nvalue;
-            newItem->next = NULL;
-            newItem->tlevel = NULL;
-            newItem->nlevel = NULL;
+
 
             //add new item to skiplist
-            for(int i = arraySize; i >= 0; i--){ //move up through head from end.
-                sl_item *item = head[i];
+            for(int i = arraySize; i >= 0; i--){ //move up through cache from end.
+                sl_item *newItem = new sl_item();
 
+                newItem->value = nvalue;
+                newItem->next = NULL;
+                newItem->tlevel = NULL;
+                newItem->nlevel = NULL;
+
+                sl_item *item = cache[i];
 
                 newItem->next = item->next;
                 item->next = newItem;
@@ -106,13 +111,13 @@ struct sl_tree{
                     newItem->nlevel = head[i+1]->next;
                 }
 
-                head[arraySize]->next->tlevel; //update tlevel at bottom
+                //cache[arraySize]->next->tlevel = newItem; //update tlevel at bottom
 
 
-                //flip a coin; break if false;
+                //flip a coin; return if false;
                 if(rand()%2 == 0){
                     cout << "done.\n";
-                    break;
+                    return;
                 }
 
 
