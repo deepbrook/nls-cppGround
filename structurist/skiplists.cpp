@@ -32,25 +32,8 @@ struct sl_tree{
         int level = 0;
 
         for(sl_item *item = head[level];level <=arraySize;){
-            if(item->nlevel == NULL){
-                if(item->next == NULL || nvalue < item->next->value ){
-                    cache[level] = item;
-                    cout<<"\ndone.\n";
-                    return;//Reached bottom level && end;
-                }
-                else if(item->next != NULL && nvalue > item->next->value){
-                    item = item->next;
-                    cout << "moving right";
-                    //move right;
-                }
-                else if(item->next-> value == nvalue){
-                    cout << "duplicate value " << nvalue <<"!\n";
-                    cache[level] = item;
-                    level++;
-                }
-            }
-            else if(item->nlevel != NULL){
-                if(item->next == NULL ||  nvalue < item->next->value){
+
+                if(item->next == NULL ||  nvalue <= item->next->value){
                     cache[level]= item; //update cache
                     item = item->nlevel; //move down
                     cout << ",level: " << level;
@@ -58,29 +41,29 @@ struct sl_tree{
                 }
                 else if(item->next != NULL && nvalue > item->next->value){
                     item = item->next;
-                    cout << "moving right\n"; // LOOPS HERE?!
+                    cout << "moving right\n";
                     //move right;
                 }
-                else if(item->next->value == nvalue){
-                    cout << "duplicate value " << nvalue <<"!\n";
-                    cache[level] = item;
-                    level++;
 
-                }
-            }
-            else{
+
+                else{
                 cout << "ABORTING!\n";
                 abort();
-            }
+                }
+
 
         }
+     for(int i = 0; i <= arraySize; i++){
+        cout << cache[i]->value <<",";
+     }
+     cout << "\n";
     }
 
     bool has(int nvalue){
         cout<<"starting has()..\n";
         fillCache(nvalue);
         cout<<"\nhas() completed.\n";
-        return head[arraySize]->next != NULL && head[arraySize]->next->value == nvalue;
+        return cache[arraySize]->next != NULL && cache[arraySize]->next->value == nvalue;
     }
 
 
@@ -108,7 +91,7 @@ struct sl_tree{
                 newItem->next = item->next;
                 item->next = newItem;
                 if(i != arraySize){
-                    newItem->nlevel = head[i+1]->next;
+                    newItem->nlevel = cache[i+1]->next;
                 }
 
                 //cache[arraySize]->next->tlevel = newItem; //update tlevel at bottom
@@ -155,10 +138,12 @@ int main(){
         cout << item << "\n";
     }
 
-
+    srand(time(NULL));
     for(int i = 0; i < 100; i++){
         root->insert(rand()% 11);
     }
+
+
     for(sl_item *head = root->head[0]; head != NULL; head = head->nlevel){
         cout << "Values for" << head <<" are: ";
         for(sl_item *item = head; item != NULL; item = item->next){
