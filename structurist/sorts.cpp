@@ -229,7 +229,7 @@ void mergeThis(int *seq, int l){
         }
     }
 
-    for(int i = 0; i < l; i++){cout << seq[i] << ",";};cout<<"\n";
+ //   for(int i = 0; i < l; i++){cout << seq[i] << ",";};cout<<"\n";
 
     //Now MergeSort;
     //traverse list in steps of 8 and merge them to 16 blocks;do this, as long as we do not over
@@ -238,7 +238,8 @@ void mergeThis(int *seq, int l){
     pos = 0;
     bool done = false;
 
-    int target[l];
+    //int target[l];
+    int *target = new int [l];
 
     while(step * 2 <= l){
 
@@ -246,15 +247,15 @@ void mergeThis(int *seq, int l){
 //            if(pos+(step*2) <=l){
                 mergeSort(seq+pos, seq+(pos+step),step, step, target);
                 pos += step * 2;
-                cout<<pos << "," << step<<"\n";
+ //               cout<<pos << "," << step<<"\n";
         }
         memcpy(seq, target, pos*sizeof(*seq));
-        for(int i = 0; i < l; i++){cout << target[i] << ",";};cout<<"\n";
+  //      for(int i = 0; i < l; i++){cout << target[i] << ",";};cout<<"\n";
         step *= 2;
         pos = 0;
     }
-    cout<<l-step;
-    //mergeSort(seq, seq + step, step, l - step, target);
+ //   cout<<l-step;
+    mergeSort(seq, seq + step, step, l - step, target);
 
 
 
@@ -268,8 +269,8 @@ void mergeThis(int *seq, int l){
 
 int main(){
     int sequence[] = {9,65,12,16,7,3,48,0,11,4};
-#define countof(x)  (sizeof(x) / sizeof(*x))
-countof(sequence);
+    #define countof(x)  (sizeof(x) / sizeof(*x))
+    countof(sequence);
 
     bubbleSortOpt(sequence, 10);
     for(int i = 0; i < 10; i++){
@@ -306,6 +307,14 @@ countof(sequence);
     cout << "\n";
 
 
+
+    srand(time(NULL));
+
+    int *arr = new int [100000000];
+    int g= 0;
+    for(int i = 0; i < 100000000; i++){
+        arr[i] = rand();
+    }
 
 
 
