@@ -30,7 +30,7 @@ namespace ConsoleApplication3
         }
 
         // BubbleSort
-        private static int[] bubbleSort(int[] arr)
+        private static int[] BubbleSort(int[] arr)
         {
             int l = arr.Length;
             bool cont = true;//initial value 1 to kick off while loop
@@ -57,12 +57,12 @@ namespace ConsoleApplication3
         }
 
         // MERGE SORT
-        public static void mergeSort(ref int[] arr)
+        public static void MergeSort(ref int[] arr)
         {
 
             if (arr.Length > 1)
             {
-                int mid = Convert.ToInt32(arr.Length / 2);
+                int mid = Convert.ToInt32(arr.Length / 2); // should be modulo op, 
 
                 int[] left = new int[mid];
                 for (int i = 0; i <= left.Length - 1; i++)
@@ -76,8 +76,8 @@ namespace ConsoleApplication3
                     right[i - mid] = arr[i];
                 }
 
-                mergeSort(ref left);
-                mergeSort(ref right);
+                MergeSort(ref left);
+                MergeSort(ref right);
 
                 arr = merge(ref left, ref right);
             }
@@ -143,7 +143,54 @@ namespace ConsoleApplication3
             return inputarray;
         }
 
-        // Sort Network
+        // Quicksort 
+        public static void sort(ref int[] array)
+        {
+            QuickSort(0, array.Length - 1, ref array);
+        }
+        private static void QuickSort(int left, int right, ref int[] data)
+        {
+            if (left < right)
+            {
+                int pivot = split(left, right, ref data);
+                QuickSort(left, pivot - 1, ref data);
+                QuickSort(pivot + 1, right, ref data);
+            }
+        }
+        private static int split(int left, int right, ref int[] data)
+        {
+            int i = left;
+            int j = right - 1;
+            int pivot = data[right];
 
+            do
+            {
+                //Search bigger element on the left
+                while (data[i] <= pivot && i < right)
+                    i += 1;
+
+                //Search  smaller element on the right
+                while (data[j] >= pivot && j > left)
+                    j -= 1;
+
+                if (i < j)
+                {
+                    // swap values
+                    int z = data[i];
+                    data[i] = data[j];
+                    data[j] = z;
+                }
+
+            } while (i < j);
+ 
+            if (data[i] > pivot)
+            {
+                //swap values
+                int z = data[i];
+                data[i] = data[right];
+                data[right] = z;
+            }
+            return i;
+        }
     }
 }
