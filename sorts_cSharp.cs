@@ -11,7 +11,22 @@ namespace ConsoleApplication3
         static void Main(string[] args)
         {
             int[] arr = RandomArray(10, 10);
+            arr = BubbleSort(arr);
+            for (int i = 0; i < arr.Length; i++)
+                Console.WriteLine(arr[i]);
+
+            arr = RandomArray(10, 10);
+            MergeSort(ref arr);
+            for (int i = 0; i < arr.Length; i++)
+                Console.WriteLine(arr[i]);
+
+            arr = RandomArray(10, 10);
             arr = InsertionSort(arr);
+            for (int i = 0; i < arr.Length; i++)
+                Console.WriteLine(arr[i]);
+
+            arr = RandomArray(10, 10);
+            QuickSort(0, arr.Length-1, ref arr);
             for (int i = 0; i < arr.Length; i++)
                 Console.WriteLine(arr[i]);
 
@@ -29,7 +44,7 @@ namespace ConsoleApplication3
             return arr;
         }
 
-        // BubbleSort
+        // BubbleSort, with optimization
         private static int[] BubbleSort(int[] arr)
         {
             int l = arr.Length;
@@ -182,7 +197,7 @@ namespace ConsoleApplication3
                 }
 
             } while (i < j);
- 
+
             if (data[i] > pivot)
             {
                 //swap values
